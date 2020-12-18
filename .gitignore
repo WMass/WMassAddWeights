@@ -1,0 +1,6 @@
+*.pyc
+*.root
+*.log
+crab_projects
+lheevent
+
