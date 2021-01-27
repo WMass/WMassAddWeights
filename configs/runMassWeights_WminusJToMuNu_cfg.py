@@ -1,5 +1,10 @@
 import FWCore.ParameterSet.Config as cms
 
+from FWCore.ParameterSet.VarParsing import VarParsing
+options = VarParsing ('python')
+options.register('remainder', '0', VarParsing.multiplicity.singleton, VarParsing.varType.string, "EventNumberModuloFilter remainder")
+options.parseArguments()
+
 from Configuration.Eras.Era_Run2_2016_cff import Run2_2016
 
 process = cms.Process('MassWeights',Run2_2016)
@@ -41,6 +46,7 @@ process.MINIAODSIMoutput = cms.OutputModule("PoolOutputModule",
     outputCommands = cms.untracked.vstring(
         'drop *',
         'keep *_correctMassWeights_*_*',
+        # 'keep *_externalLHEProducer_*_*',
         'keep GenRunInfoProduct_*_*_*',
         'keep LHERunInfoProduct_*_*_*',
         'keep GenFilterInfo_*_*_*',
@@ -48,14 +54,20 @@ process.MINIAODSIMoutput = cms.OutputModule("PoolOutputModule",
         'keep GenLumiInfoProduct_*_*_*',
     ),
     overrideInputFileSplitLevels = cms.untracked.bool(True),
-    splitLevel = cms.untracked.int32(0)
+    splitLevel = cms.untracked.int32(0),
+    SelectEvents = cms.untracked.PSet(
+        SelectEvents = cms.vstring('lhe_Step')
+    ),
 )
 
+process.filter = cms.EDFilter("EventNumberModuloFilter",
+    remainder = cms.uint32(int(options.remainder)),
+)
 
 process.correctMassWeights = cms.EDProducer("ExternalLHEProducer",
-    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc700/13TeV/powheg/Vj_NNLOPS/Wj_slc6_amd64_gcc700_CMSSW_10_2_23_WminusJToMuNu-suggested-nnpdf31-ncalls-doublefsr-q139-ckm-powheg-MiNNLO31-svn3756-ew-rwl6-j200-st2fix-ana-hoppetweights-ymax20-addmassweights.tgz'),
+    args = cms.vstring('/cvmfs/cms.cern.ch/phys_generator/gridpacks/slc6_amd64_gcc700/13TeV/powheg/Vj_NNLOPS/Wj_slc6_amd64_gcc700_CMSSW_10_2_23_WminusJToMuNu-suggested-nnpdf31-ncalls-doublefsr-q139-ckm-powheg-MiNNLO31-svn3756-ew-rwl6-j200-st2fix-ana-hoppetweights-ymax20-addmassweights-modulofilter.tgz', 'true', 'slc6_amd64_gcc700', 'CMSSW_10_2_23', options.remainder),
     nEvents = cms.untracked.int32(-1),
-    numberOfParameters = cms.uint32(1),
+    numberOfParameters = cms.uint32(5),
     outputFile = cms.string('cmsgrid_final.lhe'),
     scriptName = cms.FileInPath('GeneratorInterface/LHEInterface/data/run_generic_tarball_cvmfs.sh'),
     generateConcurrently = cms.untracked.bool(False),
@@ -66,7 +78,7 @@ process.RandomNumberGeneratorService.correctMassWeights = cms.PSet(
 )
 
 
-process.lhe_Step = cms.Path(process.correctMassWeights)
+process.lhe_Step = cms.Path(process.filter*process.correctMassWeights)
 process.MINIAODSIMoutput_step = cms.EndPath(process.MINIAODSIMoutput)
 
 process.schedule = cms.Schedule(process.lhe_Step, process.MINIAODSIMoutput_step)

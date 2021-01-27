@@ -11,14 +11,14 @@ config.JobType.maxMemoryMB = 2000
 config.JobType.maxJobRuntimeMin = 2400
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = '../configs/runMassWeights_WminusJToMuNu_cfg.py'
+config.JobType.pyCfgParams=['remainder=1']
 config.JobType.allowUndistributedCMSSW = True
 
 config.Data.inputDataset = '/WminusJetsToMuNu_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v1/MINIAODSIM'
 config.Data.allowNonValidInputDataset = True
 
-config.Data.splitting = 'EventAwareLumiBased'
-config.Data.unitsPerJob = 20000
-config.Data.lumiMask = 'lumis_WminusJToMuNu_batch1_JSON.txt'
+config.Data.splitting = 'FileBased'
+config.Data.unitsPerJob = 1
 config.Data.outLFNDirBase = '/store/group/cmst3/group/wmass/w-mass-13TeV/edmLHE' 
 config.Data.publication = True
 config.Data.outputDatasetTag = 'LHE_massWeights_APVpreVFP'

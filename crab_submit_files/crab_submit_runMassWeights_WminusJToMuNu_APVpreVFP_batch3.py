@@ -1,7 +1,7 @@
 from CRABClient.UserUtilities import config
 config = config()
 
-config.General.requestName = 'runMassWeights_WminusJToMuNu_APVpreVFP_batch2'
+config.General.requestName = 'runMassWeights_WminusJToMuNu_APVpreVFP_batch3'
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
 config.General.transferLogs = True
@@ -11,7 +11,7 @@ config.JobType.maxMemoryMB = 2000
 config.JobType.maxJobRuntimeMin = 2400
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = '../configs/runMassWeights_WminusJToMuNu_cfg.py'
-config.JobType.pyCfgParams=['remainder=2']
+config.JobType.pyCfgParams=['remainder=3']
 config.JobType.allowUndistributedCMSSW = True
 
 config.Data.inputDataset = '/WminusJetsToMuNu_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v1/MINIAODSIM'

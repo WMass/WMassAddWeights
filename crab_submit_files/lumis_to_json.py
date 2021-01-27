@@ -18,14 +18,19 @@ def split_list(alist, wanted_parts=1):
 
 splitlumis = split_list(lumis, 3)
 
+lumicount = 0
+
 for i,sl in enumerate(splitlumis):
     with open(sys.argv[1].replace('.txt', '_batch%i_JSON.txt' % i), 'w') as outputfile:
         outputfile.write('{"1": [')
         first = True
         for filelumi in sl:
+            lumicount += len(filelumi)
             if first:
                 first = False
             else:
                 outputfile.write(', ')
             outputfile.write(', '.join(['[%i, %i]' % (lumi, lumi) for lumi in filelumi]))        
         outputfile.write(']}')
+
+print('Number of lumis = %i' % lumicount)
