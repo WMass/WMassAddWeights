@@ -13,13 +13,13 @@ config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = '../configs/runMassWeights_WplusJToTauNu_cfg.py'
 config.JobType.allowUndistributedCMSSW = True
 
-config.Data.inputDataset = '/WplusJetsToTauNu_TauToMu_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16MiniAODAPV-106X_mcRun2_asymptotic_preVFP_v8-v2/MINIAODSIM'
+config.Data.inputDataset = '/WplusJetsToTauNu_TauToMu_TuneCP5_13TeV-powhegMiNNLO-pythia8-photos/RunIISummer20UL16MiniAODAPVv2-106X_mcRun2_asymptotic_preVFP_v11-v1/MINIAODSIM'
 config.Data.allowNonValidInputDataset = True
 
 config.Data.splitting = 'EventAwareLumiBased'
 config.Data.unitsPerJob = 20000
 config.Data.outLFNDirBase = '/store/group/cmst3/group/wmass/w-mass-13TeV/edmLHE' 
 config.Data.publication = True
-config.Data.outputDatasetTag = 'LHE_massWeights_APVpreVFP'
+config.Data.outputDatasetTag = 'LHE_massWeights_miniv2_APVpreVFP'
 
 config.Site.storageSite = 'T2_CH_CERN'
